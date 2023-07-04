@@ -29,8 +29,6 @@ export default function App() {
     }
 
     return (
-        <Navigation>
-            <SafeAreaView style={{backgroundColor: 'red'}}></SafeAreaView>
-        </Navigation>
+        <Navigation />
     );
 }

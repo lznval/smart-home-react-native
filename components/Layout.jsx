@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -10,7 +10,12 @@ const styles = StyleSheet.create({
 });
 
 const Layout = ({ children }) => {
-    return <View style={styles.container}>{children}</View>;
+    return (
+        <>
+            <View style={styles.container}>{children}</View>
+            <StatusBar theme='auto' />
+        </>
+    );
 };
 
 export default Layout;
