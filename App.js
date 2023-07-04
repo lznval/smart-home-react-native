@@ -1,20 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {ActivityIndicator, FlatList, RefreshControl, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Navigation from "./screens/Navigation";
+import Preloader from "./components/Preloader";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    const [items, setItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    const fetchData = () => {
+        setIsLoading(true)
+        axios.get('https://649acae3bf7c145d02397b10.mockapi.io/users')
+            .then((response) => {
+                const data = response.data
+                setItems(data)
+            }).catch((error) => {
+            console.log(error)})
+            .finally(() => {
+                setIsLoading(false)
+            })
+    };
+
+    useEffect(fetchData, []);
+
+    if (isLoading) {
+        return <Preloader />
+    }
+
+    return (
+        <Navigation>
+            <SafeAreaView style={{backgroundColor: 'red'}}></SafeAreaView>
+        </Navigation>
+    );
+}
